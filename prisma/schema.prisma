@@ -9,3 +9,24 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Ticket {
+  id          String      @id @default(uuid())
+  name        String
+  email       String
+  ticketType  TicketType
+  destination Destination
+  message     String?
+}
+
+enum TicketType {
+  premium
+  standard
+  budget
+}
+
+enum Destination {
+  mars
+  saturn
+  neptune
+}
