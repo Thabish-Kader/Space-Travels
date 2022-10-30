@@ -10,16 +10,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Ticket {
+model Book {
   id          String      @id @default(uuid())
   name        String
-  email       String
-  ticketType  TicketType
+  email       String      @unique
+  ticket      Type
   destination Destination
   message     String?
+  createdAt   DateTime    @default(now())
 }
 
-enum TicketType {
+enum Type {
   premium
   standard
   budget
