@@ -1,37 +1,42 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-
-enum TicketEnum {
-	premium = "premium",
-	standard = "standard",
-	budget = "budget",
-}
-
-enum destinationEnum {
-	mars = "mars",
-	saturn = "saturn",
-	neptune = "neptune",
-}
-
-interface IFormInput {
-	name: string;
-	email: string;
-	ticket: TicketEnum;
-	destination: destinationEnum;
-	message?: string;
-}
+import { IFormInput } from "../interface/Interface";
 
 export const Form = () => {
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
+		reset,
+		formState,
+		formState: { isSubmitSuccessful },
 	} = useForm<IFormInput>();
+
+	async function createData(data: IFormInput) {
+		const response = await fetch("http://localhost:3000/api/createTicket", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(data),
+		});
+		return response.json();
+	}
 
 	const onSubmit: SubmitHandler<IFormInput> = (data, e) => {
 		e?.preventDefault();
-		console.log(data);
+		try {
+			createData(data);
+		} catch (error) {
+			console.error(error);
+		}
 	};
+
+	useEffect(() => {
+		if (formState.isSubmitSuccessful) {
+			reset({ name: "", email: "", message: "" });
+		}
+	}, [formState, reset]);
 
 	return (
 		<section className="flex h-screen w-full flex-col items-center justify-center bg-black">
