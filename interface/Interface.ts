@@ -17,3 +17,8 @@ enum destinationEnum {
 	saturn = "saturn",
 	neptune = "neptune",
 }
+
+export interface IBookings extends IFormInput {
+	createdAt: string;
+	id: string;
+}
