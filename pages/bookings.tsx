@@ -33,7 +33,7 @@ const Bookings = ({ register }: IRegister) => {
 		}
 	};
 
-	//   https://www.joshwcomeau.com/nextjs/refreshing-server-side-props/
+	// https://www.joshwcomeau.com/nextjs/refreshing-server-side-props/
 	// Call this function whenever you want to
 	// refresh props!
 

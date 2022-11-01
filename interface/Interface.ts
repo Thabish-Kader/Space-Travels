@@ -33,8 +33,8 @@ export interface IRegister {
 		id: string;
 	}[];
 }
-// Used in bookins/[id].tsx
-type RegisterProps = {
+
+export type RegisterProps = {
 	register: {
 		name: string;
 		email: string;
