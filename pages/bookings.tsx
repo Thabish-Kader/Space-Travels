@@ -1,22 +1,29 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { IFormInput, IBookings } from "../interface/Interface";
+import { IBookings, IRegister } from "../interface/Interface";
+import type { GetServerSideProps } from "next";
+import prisma from "../lib/prisma";
+import { useRouter } from "next/router";
 
-const Bookings = () => {
-	const [bookings, setBookings] = useState<IBookings[]>();
-	async function getData() {
-		await fetch("http://localhost:3000/api/getBookings")
-			.then((response) => response.json())
-			.then((data) => setBookings(data));
-		console.log(bookings);
-	}
+export const getServerSideProps: GetServerSideProps = async () => {
+	const register = await prisma.book.findMany({
+		select: {
+			name: true,
+			email: true,
+			destination: true,
+			message: true,
+			ticket: true,
+			id: true,
+		},
+	});
 
-	useEffect(() => {
-		getData();
-	}, []);
+	return { props: { register } };
+};
 
-	const TicketType = (type: IBookings) => {
-		switch (type.ticket) {
+const Bookings = ({ register }: IRegister) => {
+	const router = useRouter();
+	const TicketType = (type: String) => {
+		switch (type) {
 			case "premium":
 				return "bg-yellow-500 text-yellow-800";
 			case "standard":
@@ -26,8 +33,20 @@ const Bookings = () => {
 		}
 	};
 
-	const destinationType = (type: IBookings) => {
-		switch (type.destination) {
+	//   https://www.joshwcomeau.com/nextjs/refreshing-server-side-props/
+	// Call this function whenever you want to
+	// refresh props!
+
+	const refreshData = () => {
+		router.replace(router.asPath);
+	};
+
+	useEffect(() => {
+		refreshData();
+	}, []);
+
+	const destinationType = (type: String) => {
+		switch (type) {
 			case "mars":
 				return "bg-red-500 text-red-800";
 			case "saturn":
@@ -83,11 +102,16 @@ const Bookings = () => {
 												</th>
 											</tr>
 										</thead>
+
 										<tbody className=" bg-gray-700">
-											{bookings?.map((data) => (
+											{register?.map((data) => (
 												<tr key={data.id}>
 													<td className="whitespace-nowrap px-6 py-4 text-lg font-medium text-white">
-														{data.name}
+														<Link
+															href={`/bookings/${data.id}`}
+														>
+															{data.name}
+														</Link>
 													</td>
 													<td className="whitespace-nowrap px-6 py-4 text-lg text-white">
 														<a
@@ -102,7 +126,7 @@ const Bookings = () => {
 													<td className="whitespace-nowrap px-6 py-4 capitalize">
 														<span
 															className={`inline-block flex-shrink-0 rounded-full p-2 px-3 text-sm font-bold ${TicketType(
-																data
+																data.ticket
 															)}`}
 														>
 															{data.ticket}
@@ -111,7 +135,7 @@ const Bookings = () => {
 													<td className="whitespace-nowrap px-6 py-4 capitalize">
 														<span
 															className={`inline-block flex-shrink-0 rounded-full p-2 px-3 text-sm font-bold ${destinationType(
-																data
+																data.destination
 															)}`}
 														>
 															{data.destination}

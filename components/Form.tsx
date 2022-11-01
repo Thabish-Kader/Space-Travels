@@ -1,8 +1,10 @@
 import React, { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { IFormInput } from "../interface/Interface";
+import { useRouter } from "next/router";
 
 export const Form = () => {
+	const router = useRouter();
 	const {
 		register,
 		handleSubmit,
@@ -22,11 +24,11 @@ export const Form = () => {
 		});
 		return response.json();
 	}
-
 	const onSubmit: SubmitHandler<IFormInput> = (data, e) => {
 		e?.preventDefault();
 		try {
 			createData(data);
+			router.push("/bookings");
 		} catch (error) {
 			console.error(error);
 		}

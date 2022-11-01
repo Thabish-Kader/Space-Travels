@@ -22,3 +22,25 @@ export interface IBookings extends IFormInput {
 	createdAt: string;
 	id: string;
 }
+
+export interface IRegister {
+	register: {
+		name: string;
+		email: string;
+		ticket: TicketEnum;
+		destination: destinationEnum;
+		message?: string;
+		id: string;
+	}[];
+}
+// Used in bookins/[id].tsx
+type RegisterProps = {
+	register: {
+		name: string;
+		email: string;
+		destination: string;
+		message: string;
+		ticket: string;
+		id: string;
+	};
+};
