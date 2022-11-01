@@ -11,7 +11,28 @@ export default async function handler(
 			where: { id: bookingid as string },
 		});
 		res.status(200).json(bookingid);
+	} else if (req.method === "PUT") {
+		const { name, email, ticket, destination, message } = req.body;
+		try {
+			const register = await prisma.book.update({
+				where: {
+					id: bookingid as string,
+				},
+				data: {
+					name,
+					email,
+					ticket,
+					destination,
+					message,
+				},
+			});
+			res.status(200).json(register);
+		} catch (error) {
+			res.status(400).json({
+				message: `Error Message${error} `,
+			});
+		}
 	} else {
-		console.log("Could not be deleted");
+		console.log("Problem Occured");
 	}
 }

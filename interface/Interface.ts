@@ -35,7 +35,7 @@ export interface IRegister {
 }
 
 export type RegisterProps = {
-	register: {
+	bookingData: {
 		name: string;
 		email: string;
 		destination: string;

@@ -1,12 +1,22 @@
 import { GetServerSideProps } from "next";
-import React from "react";
-import { RegisterProps } from "../../interface/Interface";
+import React, { useEffect, useState } from "react";
+import { IFormInput, RegisterProps } from "../../interface/Interface";
 import prisma from "../../lib/prisma";
 import { useRouter } from "next/router";
+import { useForm, SubmitHandler } from "react-hook-form";
 
-const singleBooking = ({ register }: RegisterProps) => {
-	const { id, name, email, message, destination, ticket } = register;
+const singleBooking = ({ bookingData }: RegisterProps) => {
+	const { id, name, email, message, destination, ticket } = bookingData;
 	const router = useRouter();
+	const [show, setShow] = useState<boolean>(true);
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+		reset,
+		formState,
+		formState: { isSubmitSuccessful },
+	} = useForm<IFormInput>();
 
 	async function deleteBooking(id: string) {
 		try {
@@ -22,9 +32,41 @@ const singleBooking = ({ register }: RegisterProps) => {
 		}
 	}
 
+	async function updateData(data: IFormInput) {
+		const response = await fetch(
+			`http://localhost:3000/api/bookings/${id}`,
+			{
+				method: "PUT",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(data),
+			}
+		);
+		return response.json();
+	}
+
+	const onSubmit: SubmitHandler<IFormInput> = (data, e) => {
+		e?.preventDefault();
+		try {
+			updateData(data);
+			router.push("/bookings");
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	const refreshData = () => {
+		router.replace(router.asPath);
+	};
+
+	useEffect(() => {
+		refreshData();
+	}, []);
+
 	return (
 		<div className="flex h-screen w-full flex-col items-center justify-center">
-			<div className="justif-center flex h-auto min-w-[50%] flex-col items-center rounded-lg border p-2">
+			<div className="flex h-auto min-w-[50%] flex-col items-center justify-center rounded-lg border p-2">
 				<h1 className="py-2 text-2xl font-bold capitalize text-white">
 					{name}
 				</h1>
@@ -54,10 +96,86 @@ const singleBooking = ({ register }: RegisterProps) => {
 					>
 						Delete
 					</button>
-					<button className="hover mx-1 w-full rounded-lg bg-yellow-500 p-2 font-bold text-white duration-500 hover:scale-105 hover:bg-yellow-300">
+					<button
+						onClick={() => setShow(!show)}
+						className="hover mx-1 w-full rounded-lg bg-yellow-500 p-2 font-bold text-white duration-500 hover:scale-105 hover:bg-yellow-300"
+					>
 						Edit
 					</button>
 				</div>
+			</div>
+
+			{/* Edit Popup */}
+
+			<div
+				className={
+					show
+						? `absolute top-[-100%]  z-10   w-[50%] bg-[#131415]  duration-1000`
+						: `absolute top-[30%]  z-10  w-[50%]  bg-[#131415] duration-1000`
+				}
+			>
+				<form
+					onSubmit={handleSubmit(onSubmit)}
+					className="flex h-auto min-w-[50%] flex-col items-center justify-center rounded-lg border p-2 text-white"
+				>
+					<h1 className="text-center text-2xl font-bold uppercase tracking-wider text-white">
+						Update
+					</h1>
+					<input
+						{...register("name", { required: true })}
+						type="text"
+						placeholder="Name"
+						className={`my-2 w-full rounded-lg border bg-transparent p-2 ${
+							errors.name
+								? "border-red-500 placeholder-red-500"
+								: "border-white placeholder-white"
+						}`}
+					/>
+					{errors.name && (
+						<p className="uppercase tracking-wider text-red-500">
+							Name is required !!
+						</p>
+					)}
+					<input
+						{...register("email", { required: true })}
+						type="email"
+						placeholder="Email"
+						className={`my-2 w-full rounded-lg border  bg-transparent p-2 ${
+							errors.email
+								? "border-red-500 placeholder-red-500"
+								: "border-white placeholder-white"
+						}`}
+					/>
+					{errors.email && (
+						<p className=" uppercase tracking-wider text-red-500">
+							Email is required !!
+						</p>
+					)}
+					<select
+						{...register("ticket")}
+						className="my-2 w-full rounded-lg border border-white bg-transparent p-2 text-white "
+					>
+						<option value="premium">Premium</option>
+						<option value="standard">Standard</option>
+						<option value="budget">Budget</option>
+					</select>
+					<select
+						{...register("destination")}
+						className="mb-2 w-full rounded-lg border border-white bg-transparent p-2 text-white"
+					>
+						<option value="mars">Mars</option>
+						<option value="saturn">Saturn</option>
+						<option value="neptune">Neptune</option>
+					</select>
+					<textarea
+						{...register("message")}
+						className="my-2 w-full rounded-lg border border-white bg-transparent p-2 placeholder-white"
+						placeholder="Message"
+					></textarea>
+					<button className="hover mx-1 w-full rounded-lg bg-orange-500 p-2 font-bold text-white duration-500 hover:scale-105 hover:bg-orange-300">
+						Update
+					</button>
+				</form>
 			</div>
 		</div>
 	);
@@ -67,7 +185,7 @@ export default singleBooking;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
 	const id = context.params?.id as string;
-	const register = await prisma.book.findUnique({
+	const bookingData = await prisma.book.findUnique({
 		where: {
 			id: id,
 		},
@@ -81,6 +199,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 		},
 	});
 	return {
-		props: { register },
+		props: { bookingData },
 	};
 };

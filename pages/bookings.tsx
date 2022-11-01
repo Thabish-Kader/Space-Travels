@@ -107,11 +107,7 @@ const Bookings = ({ register }: IRegister) => {
 											{register?.map((data) => (
 												<tr key={data.id}>
 													<td className="whitespace-nowrap px-6 py-4 text-lg font-medium text-white">
-														<Link
-															href={`/bookings/${data.id}`}
-														>
-															{data.name}
-														</Link>
+														{data.name}
 													</td>
 													<td className="whitespace-nowrap px-6 py-4 text-lg text-white">
 														<a
@@ -132,7 +128,7 @@ const Bookings = ({ register }: IRegister) => {
 															{data.ticket}
 														</span>
 													</td>
-													<td className="whitespace-nowrap px-6 py-4 capitalize">
+													<td className="flex justify-between whitespace-nowrap px-6 py-4 capitalize">
 														<span
 															className={`inline-block flex-shrink-0 rounded-full p-2 px-3 text-sm font-bold ${destinationType(
 																data.destination
@@ -140,6 +136,13 @@ const Bookings = ({ register }: IRegister) => {
 														>
 															{data.destination}
 														</span>
+														<button className="ml-2 rounded-lg bg-white p-2 text-black">
+															<Link
+																href={`/bookings/${data.id}`}
+															>
+																Edit
+															</Link>
+														</button>
 													</td>
 												</tr>
 											))}
