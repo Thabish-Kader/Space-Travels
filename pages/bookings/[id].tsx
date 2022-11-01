@@ -110,13 +110,13 @@ const singleBooking = ({ bookingData }: RegisterProps) => {
 			<div
 				className={
 					show
-						? `absolute top-[-100%]  z-10   w-[50%] bg-[#131415]  duration-1000`
-						: `absolute top-[30%]  z-10  w-[50%]  bg-[#131415] duration-1000`
+						? `absolute top-[-100%]  z-10   w-[50%]  bg-[#131415] duration-1000`
+						: `absolute top-[30%]  z-10  w-[50%]   bg-[#131415] duration-1000`
 				}
 			>
 				<form
 					onSubmit={handleSubmit(onSubmit)}
-					className="flex h-auto min-w-[50%] flex-col items-center justify-center rounded-lg border p-2 text-white"
+					className="flex h-auto min-w-[50%] flex-col items-center justify-center rounded-lg border  p-2 text-white"
 				>
 					<h1 className="text-center text-2xl font-bold uppercase tracking-wider text-white">
 						Update
@@ -176,6 +176,12 @@ const singleBooking = ({ bookingData }: RegisterProps) => {
 						Update
 					</button>
 				</form>
+				<button
+					onClick={() => setShow(!show)}
+					className="hover m-1 w-full rounded-lg border p-2 font-bold text-white duration-500 hover:scale-105 hover:bg-white hover:text-black"
+				>
+					Close
+				</button>
 			</div>
 		</div>
 	);
