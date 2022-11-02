@@ -41,13 +41,13 @@ export const Form = () => {
 	}, [formState, reset]);
 
 	return (
-		<section className="flex h-screen w-full flex-col items-center justify-center bg-black">
-			<div className="  min-h-[550px] min-w-[400px] bg-[#131415] p-10 ">
+		<section className="hero-img relative top-0 left-0 right-0 bottom-0 flex h-screen w-full flex-col  items-center justify-center bg-cover bg-fixed bg-center bg-no-repeat">
+			<div className="  min-h-[550px] min-w-[400px] border-2 bg-black/30  p-10 ">
 				<form
 					onSubmit={handleSubmit(onSubmit)}
 					className="flex flex-col space-y-5 text-white"
 				>
-					<h1 className="text-center text-2xl font-bold uppercase tracking-wider text-blue-500">
+					<h1 className="text-center text-2xl font-bold uppercase tracking-wider text-white">
 						Enter Details here
 					</h1>
 					<input
@@ -57,7 +57,7 @@ export const Form = () => {
 						className={`rounded-lg border  bg-transparent p-2 ${
 							errors.name
 								? "border-red-500 placeholder-red-500"
-								: "border-blue-600 placeholder-blue-500"
+								: "border-white placeholder-white"
 						}`}
 					/>
 					{errors.name && (
@@ -72,7 +72,7 @@ export const Form = () => {
 						className={`rounded-lg border  bg-transparent p-2 ${
 							errors.email
 								? "border-red-500 placeholder-red-500"
-								: "border-blue-600 placeholder-blue-500"
+								: "border-white placeholder-white"
 						}`}
 					/>
 					{errors.email && (
@@ -84,7 +84,7 @@ export const Form = () => {
 					<select
 						{...register("ticket")}
 						defaultValue="Budget"
-						className="rounded-lg border border-blue-500 bg-transparent p-2 text-blue-500 placeholder-blue-500 "
+						className="rounded-lg border border-white bg-transparent p-2 text-white "
 					>
 						<option value="premium">Premium</option>
 						<option value="standard">Standard</option>
@@ -92,7 +92,7 @@ export const Form = () => {
 					</select>
 					<select
 						{...register("destination")}
-						className="rounded-lg border border-blue-500 bg-transparent p-2 text-blue-500"
+						className="rounded-lg border border-white bg-transparent p-2 text-white"
 					>
 						<option value="mars">Mars</option>
 						<option value="saturn">Saturn</option>
@@ -100,10 +100,10 @@ export const Form = () => {
 					</select>
 					<textarea
 						{...register("message")}
-						className="rounded-lg border border-blue-500 bg-transparent p-2 placeholder-blue-500"
+						className="rounded-lg border border-white bg-transparent p-2 placeholder-white"
 						placeholder="Message"
 					></textarea>
-					<button className="w-full rounded-lg bg-[#1e40af] p-2 text-white duration-500 hover:scale-110 hover:bg-blue-500">
+					<button className="b w-full rounded-lg border-2 p-2 text-white duration-500 hover:scale-110 hover:scale-105 hover:bg-white hover:text-black">
 						Submit
 					</button>
 				</form>

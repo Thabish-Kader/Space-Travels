@@ -6,3 +6,11 @@ body {
 	background-color: black;
 	color: white;
 }
+
+.hero-img {
+	background-image: url(../public/assets/meteor.jpg);
+}
+
+.hero-img2 {
+	background-image: url(../public/assets/space2.jpg);
+}
