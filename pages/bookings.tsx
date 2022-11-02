@@ -57,7 +57,7 @@ const Bookings = ({ register }: IRegister) => {
 	};
 
 	return (
-		<div className="booking-img flex h-screen h-auto w-full flex-col items-center justify-center bg-cover bg-no-repeat">
+		<div className="booking-img flex h-screen  w-full flex-col items-center justify-center bg-cover bg-no-repeat">
 			<main className="flex h-auto flex-col items-center justify-center">
 				<div className=" mx-auto max-w-screen-lg px-4">
 					<h1 className="mb-5 text-center text-3xl font-bold uppercase tracking-wide text-white">

@@ -15,7 +15,6 @@ export const Navbar = () => {
 	const [bgColor, setBgColor] = useState<string>("transparen");
 	const { data: session } = useSession();
 	const router = useRouter();
-	console.log(session);
 
 	const changeColor = () => {
 		if (window.scrollY >= 100) {
