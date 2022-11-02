@@ -65,8 +65,8 @@ const singleBooking = ({ bookingData }: RegisterProps) => {
 	}, []);
 
 	return (
-		<div className="flex h-screen w-full flex-col items-center justify-center">
-			<div className="flex h-auto min-w-[50%] flex-col items-center justify-center rounded-lg border p-2">
+		<div className="booking-img flex h-screen w-full flex-col items-center justify-center bg-cover bg-no-repeat">
+			<div className="flex h-auto  flex-col items-center justify-center rounded-lg border bg-black/75 p-2 font-bold">
 				<h1 className="py-2 text-2xl font-bold capitalize text-white">
 					{name}
 				</h1>
@@ -110,8 +110,8 @@ const singleBooking = ({ bookingData }: RegisterProps) => {
 			<div
 				className={
 					show
-						? `absolute top-[-100%]  z-10   w-[50%]  bg-[#131415] duration-1000`
-						: `absolute top-[30%]  z-10  w-[50%]   bg-[#131415] duration-1000`
+						? `absolute top-[-100%]  z-10   w-[50%]  bg-black duration-1000`
+						: `absolute top-[30%]  z-10  w-[50%]   bg-black duration-1000`
 				}
 			>
 				<form

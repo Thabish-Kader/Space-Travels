@@ -41,7 +41,10 @@ export const Form = () => {
 	}, [formState, reset]);
 
 	return (
-		<section className="hero-img relative top-0 left-0 right-0 bottom-0 flex h-screen w-full flex-col  items-center justify-center bg-cover bg-fixed bg-center bg-no-repeat">
+		<section
+			id="register"
+			className="hero-img relative top-0 left-0 right-0 bottom-0 flex h-screen w-full flex-col  items-center justify-center bg-cover bg-fixed bg-center bg-no-repeat"
+		>
 			<div className="  min-h-[550px] min-w-[400px] border-2 bg-black/30  p-10 ">
 				<form
 					onSubmit={handleSubmit(onSubmit)}

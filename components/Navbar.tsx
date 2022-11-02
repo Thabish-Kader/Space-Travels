@@ -7,10 +7,15 @@ import { FaSpaceShuttle } from "react-icons/fa";
 import { GiArchiveRegister } from "react-icons/gi";
 import { RiRegisteredFill } from "react-icons/ri";
 import { SlClose } from "react-icons/sl";
+import { useSession, signOut } from "next-auth/react";
+import { useRouter } from "next/router";
 
 export const Navbar = () => {
 	const [nav, setNav] = useState<boolean>(false);
 	const [bgColor, setBgColor] = useState<string>("transparen");
+	const { data: session } = useSession();
+	const router = useRouter();
+	console.log(session);
 
 	const changeColor = () => {
 		if (window.scrollY >= 100) {
@@ -23,6 +28,11 @@ export const Navbar = () => {
 	useEffect(() => {
 		window.addEventListener("scroll", changeColor);
 	});
+
+	const logOut = () => {
+		signOut();
+		router.push("/login");
+	};
 
 	return (
 		<nav
@@ -39,7 +49,7 @@ export const Navbar = () => {
 					<ul className="hidden w-full flex-row sm:flex ">
 						<li className="cursor-pointer p-4 text-lg font-bold">
 							<div className="flex flex-col items-center justify-center duration-500 hover:scale-125 hover:text-orange-500">
-								<Link href="/">
+								<Link href="/#home">
 									<AiFillHome size={30} />
 								</Link>
 								<h1>Home</h1>
@@ -65,9 +75,18 @@ export const Navbar = () => {
 				</div>
 
 				{/* right side */}
-				<button className=" hidden rounded-lg border-2 bg-black py-1  px-5 font-bold text-white duration-500 hover:scale-110 hover:bg-orange-500 hover:text-black sm:block">
-					Sign Up
-				</button>
+				{session?.user?.email ? (
+					<button
+						onClick={logOut}
+						className=" hidden rounded-lg border-2 bg-black py-1  px-5 font-bold text-white duration-500 hover:scale-110 hover:bg-orange-500 hover:text-black sm:block"
+					>
+						Log Out
+					</button>
+				) : (
+					<button className=" hidden rounded-lg border-2 bg-black py-1  px-5 font-bold text-white duration-500 hover:scale-110 hover:bg-orange-500 hover:text-black sm:block">
+						<Link href="/login">Sign up</Link>
+					</button>
+				)}
 
 				<div
 					className="z-10 mt-2 block cursor-pointer sm:hidden"
@@ -100,7 +119,7 @@ export const Navbar = () => {
 					>
 						<div className="flex items-center justify-center">
 							<AiFillHome className="mx-2" />
-							<Link href="/">Home</Link>
+							<Link href="/#home">Home</Link>
 						</div>
 					</li>
 					<li
@@ -127,7 +146,7 @@ export const Navbar = () => {
 					>
 						<div className="flex items-center justify-center">
 							<RiRegisteredFill className="mx-2" />
-							<Link href="/signup">Signup</Link>
+							<Link href="/login">Signup</Link>
 						</div>
 					</li>
 				</ul>
