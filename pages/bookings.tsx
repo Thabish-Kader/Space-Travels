@@ -4,6 +4,7 @@ import { IBookings, IRegister } from "../interface/Interface";
 import type { GetServerSideProps } from "next";
 import prisma from "../lib/prisma";
 import { useRouter } from "next/router";
+import { useSession, getSession } from "next-auth/react";
 
 export const getServerSideProps: GetServerSideProps = async () => {
 	const register = await prisma.book.findMany({
@@ -22,6 +23,24 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
 const Bookings = ({ register }: IRegister) => {
 	const router = useRouter();
+	const { data: session, status } = useSession();
+
+	if (status === "loading") {
+		return <h1>Loading...</h1>;
+	}
+
+	if (status === "unauthenticated") {
+		return (
+			<div className="flex h-screen w-full flex-col items-center justify-center">
+				<h1 className="text-4xl font-bold uppercase text-red-500">
+					Access Denied !!!!
+				</h1>
+				<p className="mt-1 text-2xl">
+					Please Log in to access this page
+				</p>
+			</div>
+		);
+	}
 	const TicketType = (type: String) => {
 		switch (type) {
 			case "premium":
