@@ -28,7 +28,7 @@ const Bookings = ({ register }: IRegister) => {
 	if (status === "loading") {
 		return <h1>Loading...</h1>;
 	}
-
+	// Allows only autheticated users to access this page
 	if (status === "unauthenticated") {
 		return (
 			<div className="flex h-screen w-full flex-col items-center justify-center">
@@ -51,18 +51,6 @@ const Bookings = ({ register }: IRegister) => {
 				return "bg-black border text-white";
 		}
 	};
-
-	// https://www.joshwcomeau.com/nextjs/refreshing-server-side-props/
-	// Call this function whenever you want to
-	// refresh props!
-
-	const refreshData = () => {
-		router.replace(router.asPath);
-	};
-
-	useEffect(() => {
-		refreshData();
-	}, []);
 
 	const destinationType = (type: String) => {
 		switch (type) {

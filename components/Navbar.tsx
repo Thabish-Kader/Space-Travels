@@ -30,7 +30,6 @@ export const Navbar = () => {
 
 	const logOut = () => {
 		signOut();
-		router.push("/login");
 	};
 
 	return (
