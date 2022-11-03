@@ -41,34 +41,42 @@ export const Navbar = () => {
 			<div className="item-center m-auto flex max-w-[1240px] items-center justify-between p-4 ">
 				{/* left side */}
 				<div className="">
-					<Image src={rocket} alt="/rocket" height="75" width="75" />
+					<Link href="/#home">
+						<Image
+							src={rocket}
+							alt="/rocket"
+							height="75"
+							width="75"
+							className="duration-500 hover:scale-110"
+						/>
+					</Link>
 				</div>
 				{/* Middel */}
 				<div className="">
 					<ul className="hidden w-full flex-row sm:flex ">
 						<li className="cursor-pointer p-4 text-lg font-bold">
-							<div className="flex flex-col items-center justify-center duration-500 hover:scale-125 hover:text-orange-500">
-								<Link href="/#home">
+							<Link href="/#home">
+								<div className="flex flex-col items-center justify-center duration-500 hover:scale-125 hover:text-orange-500">
 									<AiFillHome size={30} />
-								</Link>
-								<h1>Home</h1>
-							</div>
+									<h1>Home</h1>
+								</div>
+							</Link>
 						</li>
 						<li className="cursor-pointer p-4 text-lg font-bold">
-							<div className="flex flex-col items-center justify-center duration-500 hover:scale-125 hover:text-orange-500">
-								<Link href="/bookings">
+							<Link href="/bookings">
+								<div className="flex flex-col items-center justify-center duration-500 hover:scale-125 hover:text-orange-500">
 									<FaSpaceShuttle size={30} />
-								</Link>
-								<h1>Bookings</h1>
-							</div>
+									<h1>Bookings</h1>
+								</div>
+							</Link>
 						</li>
 						<li className="cursor-pointer p-4 text-lg font-bold">
-							<div className="flex flex-col items-center justify-center duration-500 hover:scale-125 hover:text-orange-500">
-								<Link href="/#register">
+							<Link href="/#register">
+								<div className="flex flex-col items-center justify-center duration-500 hover:scale-125 hover:text-orange-500">
 									<GiArchiveRegister size={30} />
-								</Link>
-								<h1>Register</h1>
-							</div>
+									<h1>Register</h1>
+								</div>
+							</Link>
 						</li>
 					</ul>
 				</div>

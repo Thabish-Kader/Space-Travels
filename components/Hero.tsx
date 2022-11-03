@@ -15,7 +15,10 @@ export const Hero = () => {
 			<div className="absolute left-32 top-[40%] h-full ">
 				{session?.user && (
 					<h1 className="text-5xl font-bold tracking-wider">
-						Welcome {session?.user?.name}
+						Welcome{" "}
+						<span className=" tracking-wider text-orange-500">
+							{session?.user?.name}
+						</span>
 					</h1>
 				)}
 				<h1 className="py-5 text-left text-4xl font-medium">
