@@ -18,7 +18,7 @@ Prisma allows developers to interact with the database without writing any queri
 Feel free to clone this project which has CRUD functionalities. This will give you the basic knowledge needed to learn prisma. Make sure to add the database url in your env file for this to work.
 
 ### Resources 
-- (Prisma and Next Auth Docs )[https://next-auth.js.org/adapters/prisma]
+- [Prisma and Next Auth Docs](https://next-auth.js.org/adapters/prisma)
 - [Check out this amazing article](https://www.joshwcomeau.com/nextjs/refreshing-server-side-props/)
 
 ### ScreenShots
