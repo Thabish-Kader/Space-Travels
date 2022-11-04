@@ -5,7 +5,7 @@ import prisma from "../../lib/prisma";
 import { useRouter } from "next/router";
 import { useForm, SubmitHandler } from "react-hook-form";
 
-const singleBooking = ({ bookingData }: RegisterProps) => {
+const SingleBooking = ({ bookingData }: RegisterProps) => {
 	const { id, name, email, message, destination, ticket } = bookingData;
 	const router = useRouter();
 	const [show, setShow] = useState<boolean>(true);
@@ -190,7 +190,7 @@ const singleBooking = ({ bookingData }: RegisterProps) => {
 	);
 };
 
-export default singleBooking;
+export default SingleBooking;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
 	const id = context.params?.id as string;
