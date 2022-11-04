@@ -5,6 +5,7 @@ import type { GetServerSideProps } from "next";
 import prisma from "../lib/prisma";
 import { useRouter } from "next/router";
 import { useSession, getSession } from "next-auth/react";
+import { set } from "react-hook-form";
 
 export const getServerSideProps: GetServerSideProps = async () => {
 	const register = await prisma.book.findMany({
