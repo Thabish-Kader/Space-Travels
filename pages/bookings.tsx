@@ -4,6 +4,7 @@ import { IBookings, IRegister } from "../interface/Interface";
 import type { GetServerSideProps } from "next";
 import prisma from "../lib/prisma";
 import { useRouter } from "next/router";
+import { useSession, getSession } from "next-auth/react";
 
 export const getServerSideProps: GetServerSideProps = async () => {
 	const register = await prisma.book.findMany({
@@ -22,20 +23,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
 const Bookings = ({ register }: IRegister) => {
 	const router = useRouter();
-	const TicketType = (type: String) => {
-		switch (type) {
-			case "premium":
-				return "bg-yellow-500 text-yellow-800";
-			case "standard":
-				return "bg-green-500 text-green-800";
-			case "budget":
-				return "bg-black text-white";
-		}
-	};
-
-	// https://www.joshwcomeau.com/nextjs/refreshing-server-side-props/
-	// Call this function whenever you want to
-	// refresh props!
+	const { data: session, status } = useSession();
 
 	const refreshData = () => {
 		router.replace(router.asPath);
@@ -43,7 +31,34 @@ const Bookings = ({ register }: IRegister) => {
 
 	useEffect(() => {
 		refreshData();
-	}, []);
+	}, [register]);
+
+	if (status === "loading") {
+		return <h1>Loading...</h1>;
+	}
+	// Allows only autheticated users to access this page
+	if (status === "unauthenticated") {
+		return (
+			<div className="flex h-screen w-full flex-col items-center justify-center">
+				<h1 className="text-4xl font-bold uppercase text-red-500">
+					Access Denied !!!!
+				</h1>
+				<p className="mt-1 text-2xl">
+					Please Log in to access this page
+				</p>
+			</div>
+		);
+	}
+	const TicketType = (type: String) => {
+		switch (type) {
+			case "premium":
+				return "bg-yellow-500 text-yellow-800";
+			case "standard":
+				return "bg-green-500 text-green-800";
+			case "budget":
+				return "bg-black border text-white";
+		}
+	};
 
 	const destinationType = (type: String) => {
 		switch (type) {
@@ -57,8 +72,8 @@ const Bookings = ({ register }: IRegister) => {
 	};
 
 	return (
-		<div>
-			<main className=" my-36 h-auto">
+		<div className="booking-img flex h-screen  w-full flex-col items-center justify-center bg-cover bg-no-repeat">
+			<main className="flex h-auto flex-col items-center justify-center">
 				<div className=" mx-auto max-w-screen-lg px-4">
 					<h1 className="mb-5 text-center text-3xl font-bold uppercase tracking-wide text-white">
 						Bookings
@@ -66,9 +81,9 @@ const Bookings = ({ register }: IRegister) => {
 					<div className="flex flex-col">
 						<div className=" overflow-x-auto sm:-mx-6 lg:-mx-8">
 							<div className="inline-block min-w-full py-2  sm:px-6 lg:px-8">
-								<div className="overflow-hidden rounded-lg border-b border-gray-800 shadow">
-									<table className="min-w-full  divide-gray-800 ">
-										<thead className="bg-gray-800">
+								<div className="overflow-hidden rounded-lg border">
+									<table className="min-w-full ">
+										<thead className="bg-black/75">
 											<tr>
 												<th
 													scope="col"
@@ -103,9 +118,12 @@ const Bookings = ({ register }: IRegister) => {
 											</tr>
 										</thead>
 
-										<tbody className=" bg-gray-700">
+										<tbody className=" bg-black/60">
 											{register?.map((data) => (
-												<tr key={data.id}>
+												<tr
+													key={data.id}
+													className="border"
+												>
 													<td className="whitespace-nowrap px-6 py-4 text-lg font-medium text-white">
 														{data.name}
 													</td>
@@ -136,13 +154,13 @@ const Bookings = ({ register }: IRegister) => {
 														>
 															{data.destination}
 														</span>
-														<button className="ml-2 rounded-lg bg-white p-2 text-black">
-															<Link
-																href={`/bookings/${data.id}`}
-															>
+														<Link
+															href={`/bookings/${data.id}`}
+														>
+															<button className="ml-2 rounded-lg  border p-2 text-white duration-500 hover:scale-110 hover:bg-white hover:text-black">
 																Edit
-															</Link>
-														</button>
+															</button>
+														</Link>
 													</td>
 												</tr>
 											))}

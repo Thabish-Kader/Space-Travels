@@ -43,6 +43,9 @@ const singleBooking = ({ bookingData }: RegisterProps) => {
 				body: JSON.stringify(data),
 			}
 		);
+		if (response.status < 300) {
+			refreshData();
+		}
 		return response.json();
 	}
 
@@ -50,23 +53,20 @@ const singleBooking = ({ bookingData }: RegisterProps) => {
 		e?.preventDefault();
 		try {
 			updateData(data);
-			router.push("/bookings");
 		} catch (error) {
 			console.error(error);
 		}
 	};
 
+	// Call this function whenever you want to refresh props!
+	// https://www.joshwcomeau.com/nextjs/refreshing-server-side-props/
 	const refreshData = () => {
 		router.replace(router.asPath);
 	};
 
-	useEffect(() => {
-		refreshData();
-	}, []);
-
 	return (
-		<div className="flex h-screen w-full flex-col items-center justify-center">
-			<div className="flex h-auto min-w-[50%] flex-col items-center justify-center rounded-lg border p-2">
+		<div className="booking-img flex h-screen w-full flex-col items-center justify-center bg-cover bg-no-repeat">
+			<div className="flex h-auto  flex-col items-center justify-center rounded-lg border bg-black/75 p-2 font-bold">
 				<h1 className="py-2 text-2xl font-bold capitalize text-white">
 					{name}
 				</h1>
@@ -110,8 +110,8 @@ const singleBooking = ({ bookingData }: RegisterProps) => {
 			<div
 				className={
 					show
-						? `absolute top-[-100%]  z-10   w-[50%]  bg-[#131415] duration-1000`
-						: `absolute top-[30%]  z-10  w-[50%]   bg-[#131415] duration-1000`
+						? `absolute top-[-100%]  z-10   w-[50%]  bg-black duration-1000`
+						: `absolute top-[30%]  z-10  w-[50%]   bg-black duration-1000`
 				}
 			>
 				<form
@@ -172,7 +172,10 @@ const singleBooking = ({ bookingData }: RegisterProps) => {
 						className="my-2 w-full rounded-lg border border-white bg-transparent p-2 placeholder-white"
 						placeholder="Message"
 					></textarea>
-					<button className="hover mx-1 w-full rounded-lg bg-orange-500 p-2 font-bold text-white duration-500 hover:scale-105 hover:bg-orange-300">
+					<button
+						onClick={() => setShow(!show)}
+						className="hover mx-1 w-full rounded-lg bg-orange-500 p-2 font-bold text-white duration-500 hover:scale-105 hover:bg-orange-300"
+					>
 						Update
 					</button>
 				</form>

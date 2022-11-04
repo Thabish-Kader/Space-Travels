@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+	scroll-behavior: smooth;
+}
+
 body {
 	background-color: black;
 	color: white;
@@ -13,4 +17,8 @@ body {
 
 .hero-img2 {
 	background-image: url(../public/assets/space2.jpg);
+}
+
+.booking-img {
+	background-image: url(../public/assets/space.jpg);
 }

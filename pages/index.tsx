@@ -1,16 +1,17 @@
+import { useSession } from "next-auth/react";
 import Head from "next/head";
-
-import { Form } from "../components/Form";
-import { Hero } from "../components/Hero";
+import { Login } from "../components/Login";
+import { Main } from "../components/Main";
 
 export default function Home() {
+	const { data: session } = useSession();
+
 	return (
 		<div>
 			<Head>
 				<title>Space Travels</title>
 			</Head>
-			<Hero />
-			<Form />
+			{session?.user ? <Main /> : <Login />}
 		</div>
 	);
 }
