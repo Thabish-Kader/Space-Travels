@@ -25,6 +25,14 @@ const Bookings = ({ register }: IRegister) => {
 	const router = useRouter();
 	const { data: session, status } = useSession();
 
+	const refreshData = () => {
+		router.replace(router.asPath);
+	};
+
+	useEffect(() => {
+		refreshData();
+	}, [register]);
+
 	if (status === "loading") {
 		return <h1>Loading...</h1>;
 	}
@@ -146,13 +154,13 @@ const Bookings = ({ register }: IRegister) => {
 														>
 															{data.destination}
 														</span>
-														<button className="ml-2 rounded-lg  border p-2 text-white duration-500 hover:scale-110 hover:bg-white hover:text-black">
-															<Link
-																href={`/bookings/${data.id}`}
-															>
+														<Link
+															href={`/bookings/${data.id}`}
+														>
+															<button className="ml-2 rounded-lg  border p-2 text-white duration-500 hover:scale-110 hover:bg-white hover:text-black">
 																Edit
-															</Link>
-														</button>
+															</button>
+														</Link>
 													</td>
 												</tr>
 											))}

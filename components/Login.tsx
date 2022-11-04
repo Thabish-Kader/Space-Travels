@@ -58,16 +58,17 @@ export const Login = () => {
 							Sign in with Google
 						</button>
 					</div>
+
 					<div
 						onClick={() =>
 							signIn("github", {
 								callbackUrl: "http://localhost:3000/",
 							})
 						}
-						className="relative m-2 flex h-10 w-[250px] cursor-pointer items-center rounded-lg  border bg-transparent hover:bg-gray-700"
+						className="relative m-2 flex h-10 w-[250px] cursor-pointer items-center rounded-lg  border bg-transparent bg-black hover:bg-gray-700"
 					>
 						<BsGithub className="m-1" size={25} />
-						<button className="text-lg font-bold">
+						<button className="text-lg font-bold ">
 							Sign in with Github
 						</button>
 					</div>

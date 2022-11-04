@@ -6,7 +6,7 @@ import space from "../public/assets/space.jpg";
 
 export const Hero = () => {
 	const { data: session } = useSession();
-
+	console.log(session);
 	return (
 		<section
 			id="home"

@@ -81,7 +81,7 @@ export const Navbar = () => {
 				</div>
 
 				{/* right side */}
-				{session?.user?.email ? (
+				{session ? (
 					<button
 						onClick={logOut}
 						className=" hidden rounded-lg border-2 bg-black py-1  px-5 font-bold text-white duration-500 hover:scale-110 hover:bg-orange-500 hover:text-black sm:block"
